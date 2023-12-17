@@ -1,0 +1,44 @@
+package com.vednovak.urlshortener.account.controllers;
+
+import com.vednovak.urlshortener.account.exceptions.AccountRegisterException;
+import com.vednovak.urlshortener.account.models.AccountRequest;
+import com.vednovak.urlshortener.account.models.AccountResponse;
+import com.vednovak.urlshortener.account.services.AccountService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+// TODO: load from constants / messages.properties
+@Tag(name = "Account", description = "the Account Register API")
+@RestController
+@Validated
+public class UserController {
+
+    // TODO: delete / use it somewhere please!
+    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
+
+    @Autowired
+    AccountService accountService;
+
+    @Operation(
+            summary = "Register a new account",
+            description = "redirects to the original URL associated with the provided shortened URL and updates the visit count of that redirected URL")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Account registered successfully"),
+            @ApiResponse(responseCode = "400", description = "Bad request - Invalid input data"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @PostMapping("/account")
+    public AccountResponse registerAccount(@RequestBody @Valid AccountRequest accountRequest) throws AccountRegisterException {
+        return accountService.register(accountRequest);
+    }
+}
