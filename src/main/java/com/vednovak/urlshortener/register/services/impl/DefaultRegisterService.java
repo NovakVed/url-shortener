@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import static com.vednovak.urlshortener.register.utils.RegisterConstants.*;
@@ -32,12 +33,14 @@ public class DefaultRegisterService implements RegisterService {
     }
 
     @Override
-    public RegisterResponse shortenAndRegisterUrl(
+    public RegisterResponse shortenAndRegisterUrl (
             final RegisterRequest registerRequest,
             final HttpServletRequest request,
             final String accountId
-    ) {
-        final Account account = accountRepository.findByAccountId(accountId);
+    ) throws UsernameNotFoundException  {
+        final Account account = accountRepository
+                .findByAccountId(accountId)
+                .orElseThrow(() -> new UsernameNotFoundException("User with accountId '" + accountId + "' not found"));
         final String url = registerRequest.getUrl();
         if (registerRepository.existsByUrlAndAccountAccountId(url, accountId)) {
             String shortenedUrl = registerRepository.findByUrlAndAccountAccountId(url, accountId).getUrlShortened();

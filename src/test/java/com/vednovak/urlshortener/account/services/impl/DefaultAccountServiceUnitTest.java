@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class DefaultAccountServiceTest {
+class DefaultAccountServiceUnitTest {
 
     @Mock
     private MessageService messageService;

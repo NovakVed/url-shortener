@@ -1,6 +1,5 @@
 package com.vednovak.urlshortener.register.models;
 
-import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 

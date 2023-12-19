@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,7 +49,7 @@ public class RegisterController {
     public RegisterResponse shortenAndRegisterUrl(
             @RequestBody @Valid RegisterRequest registerRequest,
             HttpServletRequest request
-    ) {
+    ) throws UsernameNotFoundException {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final String accountId = authentication.getName();
 

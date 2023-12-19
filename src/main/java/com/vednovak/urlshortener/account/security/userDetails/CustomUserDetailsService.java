@@ -18,15 +18,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.accountRepository = accountRepository;
     }
 
-    // TODO: prettify this code when using optional, maybe some functional programming could do the trick :)
-    // TODO: maybe lower memory complexity as currently I am using Optional<Account> might be a bit unnecessary?
     @Override
     public UserDetails loadUserByUsername(String accountId) throws UsernameNotFoundException {
-        Account account = accountRepository.findByAccountId(accountId);
-        if (account == null) {
-            throw new UsernameNotFoundException("User with accountId '" + accountId + "' not found");
-        }
-
+        final Account account = accountRepository
+                .findByAccountId(accountId)
+                .orElseThrow(() -> new UsernameNotFoundException("User with accountId '" + accountId + "' not found"));
         return CustomUserDetails.fromAccount(account);
     }
 }

@@ -14,6 +14,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -46,7 +48,7 @@ class DefaultRegisterServiceTest {
         when(request.getScheme()).thenReturn("https");
         when(request.getServerName()).thenReturn("short");
         when(request.getServerPort()).thenReturn(8080);
-        when(accountRepository.findByAccountId(anyString())).thenReturn(account);
+        when(accountRepository.findByAccountId(anyString())).thenReturn(Optional.of(account));
         when(registerRepository.existsByUrlAndAccountAccountId(anyString(), anyString())).thenReturn(false);
         when(registerRepository.existsByUrlShortened(anyString())).thenReturn(false);
         when(registerRepository.save(any(ShortenedUrl.class))).thenReturn(new ShortenedUrl());
@@ -79,7 +81,7 @@ class DefaultRegisterServiceTest {
         when(request.getScheme()).thenReturn("https");
         when(request.getServerName()).thenReturn("short");
         when(request.getServerPort()).thenReturn(8080);
-        when(accountRepository.findByAccountId(anyString())).thenReturn(account);
+        when(accountRepository.findByAccountId(anyString())).thenReturn(Optional.of(account));
         when(registerRepository.existsByUrlAndAccountAccountId(anyString(), anyString())).thenReturn(true);
         when(registerRepository.findByUrlAndAccountAccountId(anyString(), anyString())).thenReturn(existingShortenedUrl);
 
