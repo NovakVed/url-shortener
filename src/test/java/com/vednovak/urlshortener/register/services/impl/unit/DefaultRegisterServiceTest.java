@@ -1,4 +1,4 @@
-package com.vednovak.urlshortener.register.services.impl;
+package com.vednovak.urlshortener.register.services.impl.unit;
 
 import com.vednovak.urlshortener.account.models.Account;
 import com.vednovak.urlshortener.account.repositories.AccountRepository;
@@ -6,6 +6,7 @@ import com.vednovak.urlshortener.register.models.RegisterRequest;
 import com.vednovak.urlshortener.register.models.RegisterResponse;
 import com.vednovak.urlshortener.register.models.ShortenedUrl;
 import com.vednovak.urlshortener.register.repositories.RegisterRepository;
+import com.vednovak.urlshortener.register.services.impl.DefaultRegisterService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

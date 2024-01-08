@@ -14,5 +14,6 @@ public class Account {
 
     @Id
     private String accountId;
+
     private String password;
 }

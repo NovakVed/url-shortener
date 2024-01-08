@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.vednovak.urlshortener.redirect.utils.RedirectConstants.CONNECTION_CLOSE;
+import static com.vednovak.urlshortener.utils.HeaderValues.CONNECTION_CLOSE;
 
 @Tag(name = "Redirect", description = "the Redirect Shortened URL API")
 @SecurityScheme(
@@ -39,11 +39,18 @@ public class RedirectController {
             description = "redirects to the original URL associated with the provided shortened URL and updates the visit count of that redirected URL")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Redirect successful"),
+            @ApiResponse(responseCode = "301", description = "Moved Permanently"),
+            @ApiResponse(responseCode = "302", description = "Found"),
             @ApiResponse(responseCode = "404", description = "Not Found - Invalid input data"),
+            @ApiResponse(responseCode = "500", description = "Internal server error"),
     })
     @GetMapping("/{shortenedUrl}")
-    // TODO: extract duplicated code pattern -> regex
-    public ResponseEntity<String> redirect(@PathVariable @Valid @Pattern(regexp = "^[A-Za-z]{6}$", message = "Shortened URL must be exactly 8 characters long and contain only alphabetical letters.") String shortenedUrl) throws RedirectNullException {
+    public ResponseEntity<String> redirect(
+            @PathVariable
+            @Valid
+            @Pattern(regexp = "^[A-Za-z]{6}$", message = "Shortened URL must be exactly 8 characters long and contain only alphabetical letters.")
+            String shortenedUrl
+    ) throws RedirectNullException {
         final Pair<String, Integer> urlAndHttpStatus = redirectService.getOriginalUrlByShortenedUrl(shortenedUrl);
         return ResponseEntity
                 .status(urlAndHttpStatus.getRight())

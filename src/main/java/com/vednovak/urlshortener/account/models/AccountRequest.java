@@ -6,12 +6,16 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-// TODO: load from constants / messages.properties
+import static com.vednovak.urlshortener.account.utils.AccountConstants.MAX_CHARACTER_LENGTH;
+import static com.vednovak.urlshortener.account.utils.AccountConstants.MIN_CHARACTER_LENGTH;
+import static com.vednovak.urlshortener.utils.RegexPatterns.ALPHABETIC_PATTERN;
+
 @Data
 public class AccountRequest {
+
     @NotBlank(message = "Account ID cannot be blank")
     @NotNull(message = "Account ID cannot be null")
-    @Size(min = 3, max = 30, message = "Account ID length must be between 3 and 30 characters")
-    @Pattern(regexp = "^[A-Za-z]+$", message = "Account ID must contain only alphabetical characters")
+    @Size(min = MIN_CHARACTER_LENGTH, max = MAX_CHARACTER_LENGTH, message = "Account ID length must be between 3 and 30 characters")
+    @Pattern(regexp = ALPHABETIC_PATTERN, message = "Account ID must contain only alphabetical characters")
     private String accountId;
 }

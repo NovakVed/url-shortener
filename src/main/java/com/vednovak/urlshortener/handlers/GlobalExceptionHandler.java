@@ -12,30 +12,27 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: play around with this!
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException ex) {
+    public ResponseEntity<Map<String, String>> handleValidationException(final MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
 
-        // TODO: user enumeration vulnerability?
-        // ex. accountId: "error message"???
         ex.getBindingResult().getFieldErrors().forEach(fieldError ->
                 errors.put(fieldError.getField(), fieldError.getDefaultMessage()));
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
-    // TODO: handle this logic in package **.account to make this more modular!
     @ExceptionHandler(AccountRegisterException.class)
-    public ResponseEntity<AccountResponse> handleAccountRegisterException(AccountRegisterException ex) {
+    public ResponseEntity<AccountResponse> handleAccountRegisterException(final AccountRegisterException ex) {
         AccountResponse accountResponse = ex.getAccountResponse();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(accountResponse);
     }
 
     @ExceptionHandler(RedirectNullException.class)
-    public ResponseEntity<String> handleRedirectException(RedirectNullException ex) {
+    public ResponseEntity<String> handleRedirectException(final RedirectNullException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }

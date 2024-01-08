@@ -8,5 +8,6 @@ public interface RegisterService {
     RegisterResponse shortenAndRegisterUrl(
             final RegisterRequest registerRequest,
             final HttpServletRequest request,
-            final String accountId);
+            final String accountId
+    );
 }

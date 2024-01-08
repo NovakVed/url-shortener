@@ -17,14 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.vednovak.urlshortener.account.utils.AccountConstants.CREATE_ACCOUNT_SUCCESSFUL;
-import static com.vednovak.urlshortener.account.utils.AccountConstants.CREATE_ACCOUNT_UNSUCCESSFUL;
+import static com.vednovak.urlshortener.account.utils.AccountConstants.*;
 
 @Service
 public class DefaultAccountService implements AccountService {
 
     private static final Logger LOG = LoggerFactory.getLogger(DefaultAccountService.class);
-    private static final int PASSWORD_LENGTH = 8;
 
     private final MessageService messageService;
     private final AccountRepository accountRepository;
@@ -40,13 +38,13 @@ public class DefaultAccountService implements AccountService {
     @Override
     public AccountResponse register(final AccountRequest accountRequest) throws AccountRegisterException {
         if (doesAccountIdExists(accountRequest.getAccountId())) {
+            // TODO: potential security vulnerability - user enumeration
             LOG.warn("Login for account: {} unsuccessful. Account already exists.", accountRequest.getAccountId());
             throw new AccountRegisterException(new AccountResponse(BooleanUtils.FALSE, messageService.getMessage(CREATE_ACCOUNT_UNSUCCESSFUL)));
         }
 
         final String generateRandomPassword = generateRandomPassword();
-        final Account user = new Account(accountRequest.getAccountId(), passwordEncoder.encode(generateRandomPassword));
-        accountRepository.save(user);
+        saveAccount(accountRequest, generateRandomPassword);
         return new AccountResponse(BooleanUtils.TRUE, messageService.getMessage(CREATE_ACCOUNT_SUCCESSFUL), generateRandomPassword);
     }
 
@@ -59,5 +57,10 @@ public class DefaultAccountService implements AccountService {
         final CharacterRule digitRule = new CharacterRule(EnglishCharacterData.Digit);
         final PasswordGenerator passwordGenerator = new PasswordGenerator();
         return passwordGenerator.generatePassword(PASSWORD_LENGTH, alphabeticRule, digitRule);
+    }
+
+    private void saveAccount(final AccountRequest accountRequest, final String generateRandomPassword) {
+        final Account user = new Account(accountRequest.getAccountId(), passwordEncoder.encode(generateRandomPassword));
+        accountRepository.save(user);
     }
 }

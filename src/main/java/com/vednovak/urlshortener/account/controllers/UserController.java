@@ -9,22 +9,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-// TODO: load from constants / messages.properties
 @Tag(name = "Account", description = "the Account Register API")
 @RestController
 @Validated
 public class UserController {
-
-    // TODO: delete / use it somewhere please!
-    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     AccountService accountService;

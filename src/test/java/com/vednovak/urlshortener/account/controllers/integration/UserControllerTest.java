@@ -1,4 +1,4 @@
-package com.vednovak.urlshortener.account.controllers;
+package com.vednovak.urlshortener.account.controllers.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vednovak.urlshortener.account.models.Account;
@@ -36,7 +36,7 @@ class UserControllerTest {
     void registerShouldRegisterNewAccount() throws Exception {
         // given
         AccountRequest accountRequest = new AccountRequest();
-        accountRequest.setAccountId("VednovaK");
+        accountRequest.setAccountId("vednovaK");
 
         // when
         performRegistration(accountRequest, status().isOk());
@@ -128,7 +128,7 @@ class UserControllerTest {
 
     // TODO: maybe extract this into some utils class as you might use this a lot actually?
     // TODO: maybe implement it for all (get/post/delete/put/patch) http requests?
-    private void performRegistration(AccountRequest accountRequest, ResultMatcher status) throws Exception {
+    private void performRegistration(final AccountRequest accountRequest, final ResultMatcher status) throws Exception {
         mockMvc.perform(post("/account")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(accountRequest)))

@@ -10,17 +10,18 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
+
     @Bean
     public OpenAPI openApiInformation() {
-        Server localServer = new Server()
+        final Server localServer = new Server()
                 .url("http://localhost:8080")
                 .description("Localhost Server URL");
 
-        Contact contact = new Contact()
+        final Contact contact = new Contact()
                 .email("vednovak@gmail.com")
                 .name("Vedran Novak");
 
-        Info info = new Info()
+        final Info info = new Info()
                 .contact(contact)
                 .title("URL Shortener API")
                 .description("""

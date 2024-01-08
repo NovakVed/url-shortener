@@ -1,7 +1,8 @@
-package com.vednovak.urlshortener.statistic.services.impl;
+package com.vednovak.urlshortener.statistic.services.impl.unit;
 
 import com.vednovak.urlshortener.register.models.ShortenedUrl;
 import com.vednovak.urlshortener.statistic.repositories.StatisticRepository;
+import com.vednovak.urlshortener.statistic.services.impl.DefaultStatisticService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

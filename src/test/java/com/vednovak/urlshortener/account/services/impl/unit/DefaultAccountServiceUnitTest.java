@@ -1,10 +1,11 @@
-package com.vednovak.urlshortener.account.services.impl;
+package com.vednovak.urlshortener.account.services.impl.unit;
 
 import com.vednovak.urlshortener.account.exceptions.AccountRegisterException;
 import com.vednovak.urlshortener.account.models.Account;
 import com.vednovak.urlshortener.account.models.AccountRequest;
 import com.vednovak.urlshortener.account.models.AccountResponse;
 import com.vednovak.urlshortener.account.repositories.AccountRepository;
+import com.vednovak.urlshortener.account.services.impl.DefaultAccountService;
 import com.vednovak.urlshortener.message.services.MessageService;
 import org.apache.commons.lang3.BooleanUtils;
 import org.junit.jupiter.api.Test;

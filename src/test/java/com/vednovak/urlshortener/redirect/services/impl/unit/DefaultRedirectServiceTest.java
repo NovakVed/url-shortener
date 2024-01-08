@@ -1,7 +1,9 @@
-package com.vednovak.urlshortener.redirect.services.impl;
+package com.vednovak.urlshortener.redirect.services.impl.unit;
 
+import com.vednovak.urlshortener.message.services.MessageService;
 import com.vednovak.urlshortener.redirect.exceptions.RedirectNullException;
 import com.vednovak.urlshortener.redirect.repositories.RedirectRepository;
+import com.vednovak.urlshortener.redirect.services.impl.DefaultRedirectService;
 import com.vednovak.urlshortener.register.models.ShortenedUrl;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
@@ -22,9 +24,11 @@ class DefaultRedirectServiceTest {
     @Mock
     private RedirectRepository redirectRepository;
 
+    @Mock
+    private MessageService messageService;
+
     @InjectMocks
     private DefaultRedirectService redirectService;
-
 
     @Test
     void getOriginalUrlByShortenedUrlShouldReturnUrlAndRedirectType() throws RedirectNullException {
@@ -48,7 +52,7 @@ class DefaultRedirectServiceTest {
     @Test
     void getOriginalUrlByShortenedUrlShouldThrowRedirectNullExceptionWhenUrlNotFound() {
         // Given
-        final String shortenedUrl = "nonexistent";
+        final String shortenedUrl = "https://www.notexisting.com";
         when(redirectRepository.findByUrlShortened(shortenedUrl)).thenReturn(Optional.empty());
 
         // When and Then

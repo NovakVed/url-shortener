@@ -11,8 +11,6 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,8 +30,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class RegisterController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RegisterController.class);
-
     @Autowired
     private RegisterService registerService;
 
@@ -43,6 +39,7 @@ public class RegisterController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Registered shortened url successfully"),
+            @ApiResponse(responseCode = "400", description = "Bad request - Invalid input data"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping("/register")
