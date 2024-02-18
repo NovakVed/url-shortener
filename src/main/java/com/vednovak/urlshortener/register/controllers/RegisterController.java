@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,7 +36,8 @@ public class RegisterController {
 
     @Operation(
             summary = "Shortens and Registers URL",
-            description = "shortens the provided URL and registers it for the authenticated user"
+            description = "shortens the provided URL and registers it for the authenticated user",
+            security = @SecurityRequirement(name = "Basic Auth")
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Registered shortened url successfully"),

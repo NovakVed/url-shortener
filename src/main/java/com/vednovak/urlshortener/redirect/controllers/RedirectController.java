@@ -3,10 +3,8 @@ package com.vednovak.urlshortener.redirect.controllers;
 import com.vednovak.urlshortener.redirect.exceptions.RedirectNullException;
 import com.vednovak.urlshortener.redirect.services.RedirectService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
@@ -22,11 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import static com.vednovak.urlshortener.utils.HeaderValues.CONNECTION_CLOSE;
 
 @Tag(name = "Redirect", description = "the Redirect Shortened URL API")
-@SecurityScheme(
-        name = "Basic Auth",
-        type = SecuritySchemeType.HTTP,
-        scheme = "basic"
-)
 @RestController
 @Validated
 public class RedirectController {
