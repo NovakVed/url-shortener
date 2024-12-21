@@ -5,6 +5,7 @@ import com.vednovak.urlshortener.account.models.Account;
 import com.vednovak.urlshortener.account.models.AccountRequest;
 import com.vednovak.urlshortener.account.models.AccountResponse;
 import com.vednovak.urlshortener.account.repositories.AccountRepository;
+import com.vednovak.urlshortener.account.services.GenerateRandomPasswordService;
 import com.vednovak.urlshortener.account.services.impl.DefaultAccountService;
 import com.vednovak.urlshortener.message.services.MessageService;
 import org.apache.commons.lang3.BooleanUtils;
@@ -28,6 +29,8 @@ class DefaultAccountServiceUnitTest {
     @Mock
     private AccountRepository accountRepository;
     @Mock
+    private GenerateRandomPasswordService generateRandomPasswordService;
+    @Mock
     private PasswordEncoder passwordEncoder;
 
     @InjectMocks
@@ -41,6 +44,7 @@ class DefaultAccountServiceUnitTest {
         when(accountRepository.existsByAccountId(accountRequest.getAccountId())).thenReturn(false);
         when(messageService.getMessage(CREATE_ACCOUNT_SUCCESSFUL)).thenReturn("something");
         when(passwordEncoder.encode(anyString())).thenReturn("hashpassword");
+        when(generateRandomPasswordService.generateRandomPassword()).thenReturn("password");
 
         // When
         AccountResponse accountResponse = accountService.register(accountRequest);
