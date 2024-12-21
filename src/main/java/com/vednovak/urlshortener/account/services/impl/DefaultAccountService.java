@@ -6,18 +6,17 @@ import com.vednovak.urlshortener.account.models.AccountRequest;
 import com.vednovak.urlshortener.account.models.AccountResponse;
 import com.vednovak.urlshortener.account.repositories.AccountRepository;
 import com.vednovak.urlshortener.account.services.AccountService;
+import com.vednovak.urlshortener.account.services.GenerateRandomPasswordService;
 import com.vednovak.urlshortener.message.services.MessageService;
 import org.apache.commons.lang3.BooleanUtils;
-import org.passay.CharacterRule;
-import org.passay.EnglishCharacterData;
-import org.passay.PasswordGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.vednovak.urlshortener.account.utils.AccountConstants.*;
+import static com.vednovak.urlshortener.account.utils.AccountConstants.CREATE_ACCOUNT_SUCCESSFUL;
+import static com.vednovak.urlshortener.account.utils.AccountConstants.CREATE_ACCOUNT_UNSUCCESSFUL;
 
 @Service
 public class DefaultAccountService implements AccountService {
@@ -27,12 +26,18 @@ public class DefaultAccountService implements AccountService {
     private final MessageService messageService;
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
+    private final GenerateRandomPasswordService generateRandomPasswordService;
 
+    // TODO: you don't have to use @Autowired annotation if you have only one constructor
     @Autowired
-    public DefaultAccountService(MessageService messageService, AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
+    public DefaultAccountService(MessageService messageService,
+                                 AccountRepository accountRepository,
+                                 PasswordEncoder passwordEncoder,
+                                 GenerateRandomPasswordService generateRandomPasswordService) {
         this.messageService = messageService;
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
+        this.generateRandomPasswordService = generateRandomPasswordService;
     }
 
     @Override
@@ -43,20 +48,13 @@ public class DefaultAccountService implements AccountService {
             throw new AccountRegisterException(new AccountResponse(BooleanUtils.FALSE, messageService.getMessage(CREATE_ACCOUNT_UNSUCCESSFUL)));
         }
 
-        final String generateRandomPassword = generateRandomPassword();
+        final String generateRandomPassword = generateRandomPasswordService.generateRandomPassword();
         saveAccount(accountRequest, generateRandomPassword);
         return new AccountResponse(BooleanUtils.TRUE, messageService.getMessage(CREATE_ACCOUNT_SUCCESSFUL), generateRandomPassword);
     }
 
     private boolean doesAccountIdExists(final String accountId) {
         return accountRepository.existsByAccountId(accountId);
-    }
-
-    private String generateRandomPassword() {
-        final CharacterRule alphabeticRule = new CharacterRule(EnglishCharacterData.Alphabetical);
-        final CharacterRule digitRule = new CharacterRule(EnglishCharacterData.Digit);
-        final PasswordGenerator passwordGenerator = new PasswordGenerator();
-        return passwordGenerator.generatePassword(PASSWORD_LENGTH, alphabeticRule, digitRule);
     }
 
     private void saveAccount(final AccountRequest accountRequest, final String generateRandomPassword) {
