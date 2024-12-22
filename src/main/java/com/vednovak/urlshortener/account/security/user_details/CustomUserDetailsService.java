@@ -1,11 +1,10 @@
-package com.vednovak.urlshortener.account.security.userDetails;
+package com.vednovak.urlshortener.account.security.user_details;
 
 import com.vednovak.urlshortener.account.models.Account;
 import com.vednovak.urlshortener.account.repositories.AccountRepository;
 import com.vednovak.urlshortener.message.services.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,7 +20,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final AccountRepository accountRepository;
     private final MessageService messageService;
 
-    @Autowired
     public CustomUserDetailsService(AccountRepository accountRepository, MessageService messageService) {
         this.accountRepository = accountRepository;
         this.messageService = messageService;

@@ -11,7 +11,6 @@ import com.vednovak.urlshortener.message.services.MessageService;
 import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +27,6 @@ public class DefaultAccountService implements AccountService {
     private final PasswordEncoder passwordEncoder;
     private final GenerateRandomPasswordService generateRandomPasswordService;
 
-    // TODO: you don't have to use @Autowired annotation if you have only one constructor
-    @Autowired
     public DefaultAccountService(MessageService messageService,
                                  AccountRepository accountRepository,
                                  PasswordEncoder passwordEncoder,

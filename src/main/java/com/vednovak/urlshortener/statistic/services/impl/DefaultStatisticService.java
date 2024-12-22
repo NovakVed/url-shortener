@@ -3,7 +3,6 @@ package com.vednovak.urlshortener.statistic.services.impl;
 import com.vednovak.urlshortener.register.models.ShortenedUrl;
 import com.vednovak.urlshortener.statistic.repositories.StatisticRepository;
 import com.vednovak.urlshortener.statistic.services.StatisticService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +14,7 @@ public class DefaultStatisticService implements StatisticService {
 
     private final StatisticRepository statisticRepository;
 
-    @Autowired
-    public DefaultStatisticService(StatisticRepository statisticRepository) {
+    public DefaultStatisticService(final StatisticRepository statisticRepository) {
         this.statisticRepository = statisticRepository;
     }
 

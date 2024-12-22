@@ -3,7 +3,6 @@ package com.vednovak.urlshortener.message.services.impl;
 import com.vednovak.urlshortener.message.services.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Service;
@@ -17,8 +16,7 @@ public class DefaultMessageService implements MessageService {
 
     private final MessageSource messageSource;
 
-    @Autowired
-    public DefaultMessageService(MessageSource messageSource) {
+    public DefaultMessageService(final MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 

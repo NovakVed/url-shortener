@@ -1,9 +1,8 @@
 package com.vednovak.urlshortener.message.utils;
 
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
 public class MessageConstants {
 
-
+    private MessageConstants() {
+        throw new IllegalStateException("Utility class");
+    }
 }

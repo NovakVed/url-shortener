@@ -8,7 +8,6 @@ import com.vednovak.urlshortener.register.models.ShortenedUrl;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.vednovak.urlshortener.redirect.utils.RedirectConstants.REDIRECT_UNSUCCESSFUL;
@@ -21,8 +20,7 @@ public class DefaultRedirectService implements RedirectService {
     private final RedirectRepository redirectRepository;
     private final MessageService messageService;
 
-    @Autowired
-    public DefaultRedirectService(RedirectRepository redirectRepository, MessageService messageService) {
+    public DefaultRedirectService(final RedirectRepository redirectRepository, final MessageService messageService) {
         this.redirectRepository = redirectRepository;
         this.messageService = messageService;
     }

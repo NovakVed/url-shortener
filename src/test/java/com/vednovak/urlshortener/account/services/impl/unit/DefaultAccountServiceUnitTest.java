@@ -60,7 +60,7 @@ class DefaultAccountServiceUnitTest {
     }
 
     @Test
-    void registerShouldThrowExceptionOnAlreadyRegisteredUser() throws AccountRegisterException {
+    void registerShouldThrowExceptionOnAlreadyRegisteredUser() {
         // Given
         AccountRequest accountRequest = new AccountRequest();
         when(accountRepository.existsByAccountId(accountRequest.getAccountId())).thenReturn(true);

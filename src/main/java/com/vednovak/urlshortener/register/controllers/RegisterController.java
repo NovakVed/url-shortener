@@ -13,7 +13,6 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,8 +35,11 @@ public class RegisterController {
 
     protected static final String ENDPOINT = "/api/v1/urls";
 
-    @Autowired
-    private RegisterService registerService;
+    private final RegisterService registerService;
+
+    public RegisterController(final RegisterService registerService) {
+        this.registerService = registerService;
+    }
 
     @Operation(
             summary = "Shortens and Registers URL",

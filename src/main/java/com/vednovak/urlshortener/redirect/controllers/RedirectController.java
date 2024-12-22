@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import org.apache.commons.lang3.tuple.Pair;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,8 +24,11 @@ import static com.vednovak.urlshortener.utils.HeaderValues.CONNECTION_CLOSE;
 @Validated
 public class RedirectController {
 
-    @Autowired
-    private RedirectService redirectService;
+    private final RedirectService redirectService;
+
+    public RedirectController(final RedirectService redirectService) {
+        this.redirectService = redirectService;
+    }
 
     @Operation(
             summary = "Redirect to Original URL",

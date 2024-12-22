@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,8 +24,11 @@ public class UserController {
 
     protected static final String ENDPOINT = "/api/v1/users";
 
-    @Autowired
-    AccountService accountService;
+    private final AccountService accountService;
+
+    public UserController(final AccountService accountService) {
+        this.accountService = accountService;
+    }
 
     @Operation(
             summary = "Register a new account",

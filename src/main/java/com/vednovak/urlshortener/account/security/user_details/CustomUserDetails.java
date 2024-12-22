@@ -1,4 +1,4 @@
-package com.vednovak.urlshortener.account.security.userDetails;
+package com.vednovak.urlshortener.account.security.user_details;
 
 import com.vednovak.urlshortener.account.enums.UserRole;
 import com.vednovak.urlshortener.account.models.Account;

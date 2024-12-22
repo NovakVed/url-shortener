@@ -1,8 +1,5 @@
 package com.vednovak.urlshortener.register.utils;
 
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
 public class RegisterConstants {
 
     public static final int MIN_HTTP_STATUS_CODE = 301;
@@ -12,4 +9,8 @@ public class RegisterConstants {
     public static final String SCHEME_SEPARATOR = "://";
     public static final String COLON = ":";
     public static final String USER_NOT_FOUND = "The username or password is not valid.";
+
+    private RegisterConstants() {
+        throw new IllegalStateException("Utility class");
+    }
 }
