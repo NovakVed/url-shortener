@@ -10,7 +10,7 @@ class UrlShortenerApplicationTests {
 
     @Test
     void contextLoads() {
-        // TODO: add tests
+        // add tests
     }
 
 }

@@ -6,6 +6,9 @@ import com.vednovak.urlshortener.account.models.AccountRequest;
 import com.vednovak.urlshortener.account.repositories.AccountRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -74,50 +77,13 @@ class UserControllerTest {
         assertFalse(accountRepository.existsByAccountId(accountRequest.getAccountId()));
     }
 
-    @Test
-    void registerShouldResultInBadRequestOnAccountRequestValidationForNullUsername() throws Exception {
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"ab", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", "vedno1k"})
+    void registerShouldResultInBadRequestOnAccountRequestValidation(String accountId) throws Exception {
         // given
         AccountRequest accountRequest = new AccountRequest();
-        accountRequest.setAccountId(null);
-
-        // when
-        performRegistration(accountRequest, status().isBadRequest());
-
-        // then
-        assertFalse(accountRepository.existsByAccountId(accountRequest.getAccountId()));
-    }
-
-    @Test
-    void registerShouldResultInBadRequestOnAccountRequestValidationForSmallUsernameSize() throws Exception {
-        // given
-        AccountRequest accountRequest = new AccountRequest();
-        accountRequest.setAccountId("ab");
-
-        // when
-        performRegistration(accountRequest, status().isBadRequest());
-
-        // then
-        assertFalse(accountRepository.existsByAccountId(accountRequest.getAccountId()));
-    }
-
-    @Test
-    void registerShouldResultInBadRequestOnAccountRequestValidationForLargeUsernameSize() throws Exception {
-        // given
-        AccountRequest accountRequest = new AccountRequest();
-        accountRequest.setAccountId("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
-
-        // when
-        performRegistration(accountRequest, status().isBadRequest());
-
-        // then
-        assertFalse(accountRepository.existsByAccountId(accountRequest.getAccountId()));
-    }
-
-    @Test
-    void registerShouldResultInBadRequestOnAccountRequestValidationForInvalidCharactersUsernameSize() throws Exception {
-        // given
-        AccountRequest accountRequest = new AccountRequest();
-        accountRequest.setAccountId("vedno1k");
+        accountRequest.setAccountId(accountId);
 
         // when
         performRegistration(accountRequest, status().isBadRequest());
@@ -129,7 +95,7 @@ class UserControllerTest {
     // TODO: maybe extract this into some utils class as you might use this a lot actually?
     // TODO: maybe implement it for all (get/post/delete/put/patch) http requests?
     private void performRegistration(final AccountRequest accountRequest, final ResultMatcher status) throws Exception {
-        mockMvc.perform(post("/account")
+        mockMvc.perform(post("/api/v1/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(accountRequest)))
                 .andExpect(status)

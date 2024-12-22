@@ -19,7 +19,7 @@ class HelpControllerTest {
 
     @Test
     void shouldRedirectToSwaggerDocumentation() throws Exception {
-        mockMvc.perform(get("/help"))
+        mockMvc.perform(get("/api/v1/helps"))
                 .andExpect(header().string(HttpHeaders.LOCATION, "/swagger-ui/index.html"));
     }
 }
