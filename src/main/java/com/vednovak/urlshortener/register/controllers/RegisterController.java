@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Register", description = "the Register URL API")
@@ -29,8 +30,11 @@ import org.springframework.web.bind.annotation.RestController;
         scheme = "basic"
 )
 @RestController
+@RequestMapping(RegisterController.ENDPOINT)
 @Validated
 public class RegisterController {
+
+    protected static final String ENDPOINT = "/v1/urls";
 
     @Autowired
     private RegisterService registerService;
@@ -45,7 +49,7 @@ public class RegisterController {
             @ApiResponse(responseCode = SwaggerConstants.BAD_REQUEST, description = "Bad request - Invalid input data"),
             @ApiResponse(responseCode = SwaggerConstants.INTERNAL_SERVER_ERROR, description = "Internal server error")
     })
-    @PostMapping("/register")
+    @PostMapping
     public RegisterResponse shortenAndRegisterUrl(
             @RequestBody @Valid RegisterRequest registerRequest,
             HttpServletRequest request

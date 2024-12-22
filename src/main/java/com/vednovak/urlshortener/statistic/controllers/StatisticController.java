@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -30,8 +31,11 @@ import static com.vednovak.urlshortener.utils.RegexPatterns.ALPHABETIC_PATTERN;
         scheme = "basic"
 )
 @RestController
+@RequestMapping(StatisticController.ENDPOINT)
 @Validated
 public class StatisticController {
+
+    protected static final String ENDPOINT = "/v1/statistics";
 
     @Autowired
     private StatisticService statisticService;
@@ -46,7 +50,7 @@ public class StatisticController {
             @ApiResponse(responseCode = SwaggerConstants.BAD_REQUEST, description = "Bad request - Invalid input data"),
             @ApiResponse(responseCode = SwaggerConstants.INTERNAL_SERVER_ERROR, description = "Internal server error")
     })
-    @GetMapping("/statistic/{AccountId}")
+    @GetMapping("/{accountId}")
     public Map<String, Long> getRegisteredUrlsWithVisitCount(
             @PathVariable("AccountId")
             @NotBlank(message = "Account ID cannot be blank")
