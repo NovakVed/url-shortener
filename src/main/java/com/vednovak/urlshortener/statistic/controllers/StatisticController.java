@@ -1,5 +1,6 @@
 package com.vednovak.urlshortener.statistic.controllers;
 
+import com.vednovak.urlshortener.constants.SwaggerConstants;
 import com.vednovak.urlshortener.statistic.services.StatisticService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -41,9 +42,9 @@ public class StatisticController {
             security = @SecurityRequirement(name = "Basic Auth")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation"),
-            @ApiResponse(responseCode = "400", description = "Bad request - Invalid input data"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
+            @ApiResponse(responseCode = SwaggerConstants.OK, description = "successful operation"),
+            @ApiResponse(responseCode = SwaggerConstants.BAD_REQUEST, description = "Bad request - Invalid input data"),
+            @ApiResponse(responseCode = SwaggerConstants.INTERNAL_SERVER_ERROR, description = "Internal server error")
     })
     @GetMapping("/statistic/{AccountId}")
     public Map<String, Long> getRegisteredUrlsWithVisitCount(

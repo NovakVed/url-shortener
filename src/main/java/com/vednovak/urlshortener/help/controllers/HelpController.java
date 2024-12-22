@@ -1,5 +1,6 @@
 package com.vednovak.urlshortener.help.controllers;
 
+import com.vednovak.urlshortener.constants.SwaggerConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -20,8 +21,8 @@ public class HelpController {
             summary = "Redirects to Swagger UI Documentation",
             description = "contains instructions of installation, start and usage of Spring Boot app")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Documentation Found - Successful operation"),
-            @ApiResponse(responseCode = "500", description = "Internal server error"),
+            @ApiResponse(responseCode = SwaggerConstants.OK, description = "Documentation Found - Successful operation"),
+            @ApiResponse(responseCode = SwaggerConstants.INTERNAL_SERVER_ERROR, description = "Internal server error"),
     })
     @GetMapping("/help")
     public ResponseEntity<String> redirectToDocumentation() {

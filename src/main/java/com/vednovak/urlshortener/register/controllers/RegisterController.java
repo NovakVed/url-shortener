@@ -1,5 +1,6 @@
 package com.vednovak.urlshortener.register.controllers;
 
+import com.vednovak.urlshortener.constants.SwaggerConstants;
 import com.vednovak.urlshortener.register.models.RegisterRequest;
 import com.vednovak.urlshortener.register.models.RegisterResponse;
 import com.vednovak.urlshortener.register.services.RegisterService;
@@ -40,9 +41,9 @@ public class RegisterController {
             security = @SecurityRequirement(name = "Basic Auth")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Registered shortened url successfully"),
-            @ApiResponse(responseCode = "400", description = "Bad request - Invalid input data"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
+            @ApiResponse(responseCode = SwaggerConstants.OK, description = "Registered shortened url successfully"),
+            @ApiResponse(responseCode = SwaggerConstants.BAD_REQUEST, description = "Bad request - Invalid input data"),
+            @ApiResponse(responseCode = SwaggerConstants.INTERNAL_SERVER_ERROR, description = "Internal server error")
     })
     @PostMapping("/register")
     public RegisterResponse shortenAndRegisterUrl(

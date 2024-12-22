@@ -1,5 +1,6 @@
 package com.vednovak.urlshortener.redirect.controllers;
 
+import com.vednovak.urlshortener.constants.SwaggerConstants;
 import com.vednovak.urlshortener.redirect.exceptions.RedirectNullException;
 import com.vednovak.urlshortener.redirect.services.RedirectService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,11 +32,11 @@ public class RedirectController {
             summary = "Redirect to Original URL",
             description = "redirects to the original URL associated with the provided shortened URL and updates the visit count of that redirected URL")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Redirect successful"),
-            @ApiResponse(responseCode = "301", description = "Moved Permanently"),
-            @ApiResponse(responseCode = "302", description = "Found"),
-            @ApiResponse(responseCode = "404", description = "Not Found - Invalid input data"),
-            @ApiResponse(responseCode = "500", description = "Internal server error"),
+            @ApiResponse(responseCode = SwaggerConstants.OK, description = "Redirect successful"),
+            @ApiResponse(responseCode = SwaggerConstants.MOVED_PERMANENTLY, description = "Moved Permanently"),
+            @ApiResponse(responseCode = SwaggerConstants.FOUND, description = "Found"),
+            @ApiResponse(responseCode = SwaggerConstants.NOT_FOUND, description = "Not Found - Invalid input data"),
+            @ApiResponse(responseCode = SwaggerConstants.INTERNAL_SERVER_ERROR, description = "Internal server error"),
     })
     @GetMapping("/{shortenedUrl}")
     public ResponseEntity<String> redirect(
