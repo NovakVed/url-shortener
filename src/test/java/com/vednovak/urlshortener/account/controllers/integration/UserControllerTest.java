@@ -39,13 +39,28 @@ class UserControllerTest {
     void registerShouldRegisterNewAccount() throws Exception {
         // given
         AccountRequest accountRequest = new AccountRequest();
-        accountRequest.setAccountId("vednovaK");
+        accountRequest.setAccountId("vednovak");
+        accountRequest.setPassword("Testing!23");
 
         // when
         performRegistration(accountRequest, status().isOk());
 
         // then
         assertTrue(accountRepository.existsByAccountId(accountRequest.getAccountId()));
+    }
+
+    @Test
+    void registerGivenWeakPasswordThenShouldNotRegisterNewAccount() throws Exception {
+        // given
+        AccountRequest accountRequest = new AccountRequest();
+        accountRequest.setAccountId("vednovak");
+        accountRequest.setPassword("testing");
+
+        // when
+        performRegistration(accountRequest, status().isBadRequest());
+
+        // then
+        assertFalse(accountRepository.existsByAccountId(accountRequest.getAccountId()));
     }
 
     @Test
@@ -56,6 +71,7 @@ class UserControllerTest {
 
         AccountRequest accountRequest = new AccountRequest();
         accountRequest.setAccountId("exists");
+        accountRequest.setPassword("Testing!23");
 
         // when
         performRegistration(accountRequest, status().isBadRequest());

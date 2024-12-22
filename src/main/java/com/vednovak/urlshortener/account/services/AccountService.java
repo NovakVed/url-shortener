@@ -5,5 +5,5 @@ import com.vednovak.urlshortener.account.models.AccountRequest;
 import com.vednovak.urlshortener.account.models.AccountResponse;
 
 public interface AccountService {
-    AccountResponse register(AccountRequest accountRequest) throws AccountRegisterException;
+    AccountResponse create(AccountRequest accountRequest) throws AccountRegisterException;
 }

@@ -31,15 +31,15 @@ public class UserController {
     }
 
     @Operation(
-            summary = "Register a new account",
+            summary = "Create a new account",
             description = "redirects to the original URL associated with the provided shortened URL and updates the visit count of that redirected URL")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = SwaggerConstants.OK, description = "Account registered successfully"),
+            @ApiResponse(responseCode = SwaggerConstants.OK, description = "Account created successfully"),
             @ApiResponse(responseCode = SwaggerConstants.BAD_REQUEST, description = "Bad request - Invalid input data"),
             @ApiResponse(responseCode = SwaggerConstants.INTERNAL_SERVER_ERROR, description = "Internal server error")
     })
     @PostMapping
-    public AccountResponse registerAccount(@RequestBody @Valid AccountRequest accountRequest) throws AccountRegisterException {
-        return accountService.register(accountRequest);
+    public AccountResponse createAccount(@RequestBody @Valid AccountRequest account) throws AccountRegisterException {
+        return accountService.create(account);
     }
 }

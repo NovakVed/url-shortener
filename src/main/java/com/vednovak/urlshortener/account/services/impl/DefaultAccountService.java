@@ -6,13 +6,13 @@ import com.vednovak.urlshortener.account.models.AccountRequest;
 import com.vednovak.urlshortener.account.models.AccountResponse;
 import com.vednovak.urlshortener.account.repositories.AccountRepository;
 import com.vednovak.urlshortener.account.services.AccountService;
-import com.vednovak.urlshortener.account.services.GenerateRandomPasswordService;
 import com.vednovak.urlshortener.message.services.MessageService;
 import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.vednovak.urlshortener.account.utils.AccountConstants.CREATE_ACCOUNT_SUCCESSFUL;
 import static com.vednovak.urlshortener.account.utils.AccountConstants.CREATE_ACCOUNT_UNSUCCESSFUL;
@@ -25,37 +25,34 @@ public class DefaultAccountService implements AccountService {
     private final MessageService messageService;
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
-    private final GenerateRandomPasswordService generateRandomPasswordService;
 
     public DefaultAccountService(MessageService messageService,
                                  AccountRepository accountRepository,
-                                 PasswordEncoder passwordEncoder,
-                                 GenerateRandomPasswordService generateRandomPasswordService) {
+                                 PasswordEncoder passwordEncoder) {
         this.messageService = messageService;
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
-        this.generateRandomPasswordService = generateRandomPasswordService;
     }
 
     @Override
-    public AccountResponse register(final AccountRequest accountRequest) throws AccountRegisterException {
-        if (doesAccountIdExists(accountRequest.getAccountId())) {
-            LOG.warn("Login for account: {} unsuccessful. Account already exists.", accountRequest.getAccountId());
+    @Transactional
+    public AccountResponse create(final AccountRequest account) throws AccountRegisterException {
+        if (doesAccountIdExists(account.getAccountId())) {
+            LOG.warn("Login for account: {} unsuccessful. Account already exists.", account.getAccountId());
             final AccountResponse accountResponse = new AccountResponse(BooleanUtils.FALSE, messageService.getMessage(CREATE_ACCOUNT_UNSUCCESSFUL));
             throw new AccountRegisterException(accountResponse);
         }
 
-        final String generateRandomPassword = generateRandomPasswordService.generateRandomPassword();
-        saveAccount(accountRequest, generateRandomPassword);
-        return new AccountResponse(BooleanUtils.TRUE, messageService.getMessage(CREATE_ACCOUNT_SUCCESSFUL), generateRandomPassword);
+        saveAccount(account);
+        return new AccountResponse(BooleanUtils.TRUE, messageService.getMessage(CREATE_ACCOUNT_SUCCESSFUL));
     }
 
     private boolean doesAccountIdExists(final String accountId) {
         return accountRepository.existsByAccountId(accountId);
     }
 
-    private void saveAccount(final AccountRequest accountRequest, final String generateRandomPassword) {
-        final Account user = new Account(accountRequest.getAccountId(), passwordEncoder.encode(generateRandomPassword));
+    private void saveAccount(final AccountRequest accountRequest) {
+        final Account user = new Account(accountRequest.getAccountId(), passwordEncoder.encode(accountRequest.getPassword()));
         accountRepository.save(user);
     }
 }
