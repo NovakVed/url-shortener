@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class AccountRegisterException extends Exception {
 
-    private final AccountResponse accountResponse;
+    private final transient AccountResponse accountResponse;
 
     public AccountRegisterException(final AccountResponse accountResponse) {
         this.accountResponse = accountResponse;

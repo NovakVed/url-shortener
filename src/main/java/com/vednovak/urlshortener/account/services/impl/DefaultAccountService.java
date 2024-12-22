@@ -40,9 +40,9 @@ public class DefaultAccountService implements AccountService {
     @Override
     public AccountResponse register(final AccountRequest accountRequest) throws AccountRegisterException {
         if (doesAccountIdExists(accountRequest.getAccountId())) {
-            // TODO: potential security vulnerability - user enumeration
             LOG.warn("Login for account: {} unsuccessful. Account already exists.", accountRequest.getAccountId());
-            throw new AccountRegisterException(new AccountResponse(BooleanUtils.FALSE, messageService.getMessage(CREATE_ACCOUNT_UNSUCCESSFUL)));
+            final AccountResponse accountResponse = new AccountResponse(BooleanUtils.FALSE, messageService.getMessage(CREATE_ACCOUNT_UNSUCCESSFUL));
+            throw new AccountRegisterException(accountResponse);
         }
 
         final String generateRandomPassword = generateRandomPasswordService.generateRandomPassword();
