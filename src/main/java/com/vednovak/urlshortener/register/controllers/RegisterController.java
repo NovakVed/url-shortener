@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class RegisterController {
 
-    protected static final String ENDPOINT = "/v1/urls";
+    protected static final String ENDPOINT = "/api/v1/urls";
 
     @Autowired
     private RegisterService registerService;

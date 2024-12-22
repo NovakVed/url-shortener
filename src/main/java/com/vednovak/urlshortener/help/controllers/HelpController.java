@@ -19,7 +19,7 @@ import static com.vednovak.urlshortener.utils.HeaderValues.CONNECTION_CLOSE;
 @RequestMapping(HelpController.ENDPOINT)
 public class HelpController {
 
-    protected static final String ENDPOINT = "/v1/helps";
+    protected static final String ENDPOINT = "/api/v1/helps";
 
     @Operation(
             summary = "Redirects to Swagger UI Documentation",

@@ -35,7 +35,7 @@ import static com.vednovak.urlshortener.utils.RegexPatterns.ALPHABETIC_PATTERN;
 @Validated
 public class StatisticController {
 
-    protected static final String ENDPOINT = "/v1/statistics";
+    protected static final String ENDPOINT = "/api/v1/statistics";
 
     @Autowired
     private StatisticService statisticService;

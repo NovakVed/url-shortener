@@ -31,10 +31,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // TODO: investigate a bit what is csrf and how does it works
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/account").permitAll()
-                        .requestMatchers("/register").authenticated()
-                        .requestMatchers("/statistic/**").authenticated()
-                        .requestMatchers("/help").permitAll()
+                        .requestMatchers("/api/v1/users").permitAll()
+                        .requestMatchers("/api/v1/urls").authenticated()
+                        .requestMatchers("/api/v1/statistics/**").authenticated()
+                        .requestMatchers("/api/v1/helps").permitAll()
                         .requestMatchers("/v3/**", "/swagger-ui/**").permitAll()
                         .requestMatchers("/*").permitAll()
                         .requestMatchers(toH2Console()).permitAll()

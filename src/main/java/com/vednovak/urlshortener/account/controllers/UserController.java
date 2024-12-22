@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class UserController {
 
-    protected static final String ENDPOINT = "/v1/users";
+    protected static final String ENDPOINT = "/api/v1/users";
 
     @Autowired
     AccountService accountService;
