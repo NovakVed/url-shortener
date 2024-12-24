@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import static com.vednovak.urlshortener.account.utils.AccountConstants.CREATE_ACCOUNT_SUCCESSFUL;
 import static com.vednovak.urlshortener.account.utils.AccountConstants.CREATE_ACCOUNT_UNSUCCESSFUL;
@@ -34,8 +33,8 @@ public class DefaultAccountService implements AccountService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // TODO: do I need @Transactional here?
     @Override
-    @Transactional
     public AccountResponse create(final AccountRequest account) throws AccountRegisterException {
         if (doesAccountIdExists(account.getAccountId())) {
             LOG.warn("Login for account: {} unsuccessful. Account already exists.", account.getAccountId());

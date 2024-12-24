@@ -96,6 +96,9 @@ public class DefaultRegisterService implements RegisterService {
         return RandomStringUtils.randomAlphabetic(SHORTEN_URL_LENGTH);
     }
 
+    // TODO: what if you use load balancer?
+    //  -> you can't rely on this method to get the base url
+    //  -> you need to have a configuration for this???
     private String getBaseUrl(HttpServletRequest request) {
         final String scheme = request.getScheme();
         final String serverName = request.getServerName();
