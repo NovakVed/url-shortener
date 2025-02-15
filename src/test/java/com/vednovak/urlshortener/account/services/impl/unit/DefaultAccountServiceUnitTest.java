@@ -41,7 +41,7 @@ class DefaultAccountServiceUnitTest {
         accountRequest.setAccountId("vednovak");
         when(accountRepository.existsByAccountId(accountRequest.getAccountId())).thenReturn(false);
         when(messageService.getMessage(CREATE_ACCOUNT_SUCCESSFUL)).thenReturn("something");
-        when(passwordEncoder.encode(anyString())).thenReturn("hashpassword");
+        when(passwordEncoder.encode(any())).thenReturn("hashpassword");
 
         // When
         AccountResponse accountResponse = accountService.create(accountRequest);
