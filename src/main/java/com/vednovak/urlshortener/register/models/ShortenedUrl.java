@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// TODO: maybe use true/false and do logic regarding that as int takes 4 bytes while 0/1 takes 1
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
